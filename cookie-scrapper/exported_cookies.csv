@@ -1,0 +1,10 @@
+domain,expiry,httpOnly,name,path,sameSite,secure,value
+www.dpoconsulting.pt,2026-09-30 21:11:28,False,fa-consent-analytics_storage,/,Lax,False,false
+www.dpoconsulting.pt,2026-09-30 21:11:28,False,fa-consent-functionality_storage,/,Lax,False,false
+.dpoconsulting.pt,2026-09-30 21:11:23,False,_ga_JT6E7HGH11,/,Lax,False,GS2.1.s1756242683$o1$g0$t1756242683$j60$l0$h0
+.dpoconsulting.pt,2026-09-30 21:11:23,False,_ga,/,Lax,False,GA1.1.1463137559.1756242684
+www.dpoconsulting.pt,2026-09-30 21:11:28,False,fa-consent-personalization_storage,/,Lax,False,false
+www.dpoconsulting.pt,2026-09-30 21:11:28,False,fa-consent-ad_personalization,/,Lax,False,false
+www.dpoconsulting.pt,2026-09-30 21:11:28,False,fa-consent-ad_user_data,/,Lax,False,false
+www.dpoconsulting.pt,2026-09-30 21:11:28,False,fa-consent-security_storage,/,Lax,False,true
+www.dpoconsulting.pt,2026-09-30 21:11:28,False,fa-consent-ad_storage,/,Lax,False,false
