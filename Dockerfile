@@ -8,11 +8,16 @@ WORKDIR /app
 # First, update the package list and install necessary dependencies for Chrome
 RUN apt-get update && apt-get install -y wget gnupg ca-certificates --no-install-recommends
 
-# Download Google's signing key and add it to the system's list of trusted keys
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+# --- NEW, MODERN METHOD FOR ADDING REPOSITORY KEY ---
+# Create a directory for apt keyrings
+RUN install -m 0755 -d /etc/apt/keyrings
 
-# Add the official Google Chrome repository to the system's sources
-RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+# Download Google's signing key and save it to the new keyring directory
+RUN wget -q -O /etc/apt/keyrings/google-chrome.asc https://dl-ssl.google.com/linux/linux_signing_key.pub
+
+# Add the official Google Chrome repository, now signed by the key we downloaded
+RUN echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.asc] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+# --- END OF NEW METHOD ---
 
 # Update the package list again (to include Chrome) and install the stable version of Chrome
 RUN apt-get update && apt-get install -y google-chrome-stable --no-install-recommends
