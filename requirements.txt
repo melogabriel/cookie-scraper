@@ -1,3 +1,6 @@
+Flask
+Flask-Cors
 selenium
 webdriver-manager
 pandas
+gunicorn
