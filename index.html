@@ -3,115 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Cookie Exporter</title>
+    <title>Cookie Scraper</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
+        .spinner {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-        <h1 class="text-2xl font-bold text-center text-gray-800 mb-2">Cookie Exporter</h1>
-        <p class="text-center text-gray-500 mb-6">Enter a website URL to download its first-party cookies as a .csv file.</p>
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-lg mx-4">
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-2">Website Cookie Exporter</h1>
+        <p class="text-center text-gray-500 mb-6">Enter a URL to download its cookies as a .csv file.</p>
         
-        <!-- The form for user input -->
-        <form id="cookieForm">
+        <form id="cookie-form">
             <div class="mb-4">
-                <label for="urlInput" class="block text-gray-700 text-sm font-bold mb-2">Website URL:</label>
-                <input type="url" id="urlInput" name="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="https://www.example.com" required>
+                <label for="url-input" class="block text-gray-700 text-sm font-bold mb-2">Target URL</label>
+                <input type="url" id="url-input" placeholder="https://www.google.com" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
             
-            <!-- The submit button that triggers the script -->
-            <div class="flex items-center justify-center">
-                <button type="submit" id="submitButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
-                    <span id="buttonText">Download Cookies</span>
-                    <span id="buttonSpinner" class="hidden">
-                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Processing...
-                    </span>
-                </button>
-            </div>
+            <button type="submit" id="submitButton"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-300 flex items-center justify-center">
+                <span id="buttonText">Download Cookies</span>
+                <div id="buttonSpinner" class="spinner hidden"></div>
+            </button>
         </form>
 
-        <!-- Message area for errors or status updates -->
-        <div id="message" class="mt-4 text-center text-red-500 font-semibold"></div>
+        <div id="messageDiv" class="mt-4 text-center text-sm text-gray-600 min-h-[40px] p-2 border border-transparent rounded-md"></div>
     </div>
 
     <script>
-        const form = document.getElementById('cookieForm');
-        const urlInput = document.getElementById('urlInput');
-        const messageDiv = document.getElementById('message');
-        const submitButton = document.getElementById('submitButton');
-        const buttonText = document.getElementById('buttonText');
-        const buttonSpinner = document.getElementById('buttonSpinner');
-
-        // This is the most important part of the script.
-        // It listens for the form's 'submit' event.
-        form.addEventListener('submit', async (event) => {
-            // This line PREVENTS the default form submission (page reload).
-            event.preventDefault(); 
+        document.getElementById('cookie-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
             
-            // Show loading state and clear previous messages
-            messageDiv.textContent = '';
+            const url = document.getElementById('url-input').value;
+            const submitButton = document.getElementById('submitButton');
+            const buttonText = document.getElementById('buttonText');
+            const buttonSpinner = document.getElementById('buttonSpinner');
+            const messageDiv = document.getElementById('messageDiv');
+
+            // --- UI Feedback ---
             submitButton.disabled = true;
             buttonText.classList.add('hidden');
             buttonSpinner.classList.remove('hidden');
-
-            const targetUrl = urlInput.value;
+            messageDiv.className = 'mt-4 text-center text-sm p-2 border rounded-md border-blue-200 bg-blue-50 text-blue-700';
+            messageDiv.innerHTML = 'Connecting to the server... <br><small>This may take up to a minute if the server is waking up from sleep.</small>';
 
             try {
-                // IMPORTANT: Replace this with your actual Render backend URL
-                const backendUrl = 'https://cookie-scrapper.onrender.com/scrape';
-
-                const response = await fetch(backendUrl, {
+                // --- Use your new, working Render URL ---
+                const apiUrl = 'https://cookie-scrapper.onrender.com/scrape'; 
+                
+                const response = await fetch(apiUrl, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ url: targetUrl }),
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: url })
                 });
 
                 if (response.ok) {
-                    // Check if the response is a file to download
-                    const disposition = response.headers.get('Content-Disposition');
-                    if (disposition && disposition.indexOf('attachment') !== -1) {
+                    const contentType = response.headers.get("content-type");
+                    if (contentType && contentType.includes("text/csv")) {
+                        messageDiv.className = 'mt-4 text-center text-sm p-2 border rounded-md border-green-200 bg-green-50 text-green-700';
+                        messageDiv.textContent = 'Success! Your download is starting.';
                         const blob = await response.blob();
-                        const url = window.URL.createObjectURL(blob);
+                        const downloadUrl = window.URL.createObjectURL(blob);
                         const a = document.createElement('a');
-                        a.style.display = 'none';
-                        a.href = url;
-                        // Extract filename from header or set a default
-                        const filename = disposition.split('filename=')[1] || 'exported_cookies.csv';
-                        a.download = filename;
+                        a.href = downloadUrl;
+                        a.download = 'cookies.csv';
                         document.body.appendChild(a);
                         a.click();
-                        window.URL.revokeObjectURL(url);
-                        messageDiv.textContent = 'Download successful!';
-                        messageDiv.className = 'mt-4 text-center text-green-500 font-semibold';
+                        a.remove();
                     } else {
-                        // Handle cases where response is not a file (e.g., no cookies found)
                         const result = await response.json();
-                        messageDiv.textContent = result.message || 'No cookies found or unexpected response.';
-                        messageDiv.className = 'mt-4 text-center text-yellow-500 font-semibold';
+                        messageDiv.className = 'mt-4 text-center text-sm p-2 border rounded-md border-gray-200 bg-gray-50 text-gray-700';
+                        messageDiv.textContent = result.message || 'Received a success response but no file.';
                     }
                 } else {
-                    // Handle HTTP errors like 500, 404, etc.
                     const errorData = await response.json();
-                    messageDiv.textContent = `Error: ${errorData.error || 'Server error'}`;
-                    messageDiv.className = 'mt-4 text-center text-red-500 font-semibold';
+                    messageDiv.className = 'mt-4 text-center text-sm p-2 border rounded-md border-red-200 bg-red-50 text-red-700';
+                    messageDiv.innerHTML = `<strong>Error:</strong> ${errorData.error}<br><small class="text-xs">${errorData.details || ''}</small>`;
                 }
 
             } catch (error) {
-                // Handle network errors (e.g., backend is down)
                 console.error('Fetch error:', error);
-                messageDiv.textContent = 'Network Error: Could not connect to the server.';
-                messageDiv.className = 'mt-4 text-center text-red-500 font-semibold';
+                messageDiv.className = 'mt-4 text-center text-sm p-2 border rounded-md border-red-200 bg-red-50 text-red-700';
+                messageDiv.innerHTML = '<strong>Network Error:</strong> Could not connect to the server. It might be asleep or has crashed. Please try again in a minute.';
             } finally {
-                // Restore button to its normal state
                 submitButton.disabled = false;
                 buttonText.classList.remove('hidden');
                 buttonSpinner.classList.add('hidden');
@@ -120,3 +106,4 @@
     </script>
 </body>
 </html>
+
