@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookie Scraper</title>
+    <title>Cookie Exporter</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Import Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
         .spinner {
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-top-color: #fff;
             border-radius: 50%;
-            width: 16px;
-            height: 16px;
+            width: 1rem; /* 16px */
+            height: 1rem; /* 16px */
             animation: spin 1s linear infinite;
         }
         @keyframes spin {
@@ -20,26 +26,50 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-lg mx-4">
-        <h1 class="text-2xl font-bold text-center text-gray-800 mb-2">Website Cookie Exporter</h1>
-        <p class="text-center text-gray-500 mb-6">Enter a URL to download its cookies as a .csv file.</p>
-        
-        <form id="cookie-form">
-            <div class="mb-4">
-                <label for="url-input" class="block text-gray-700 text-sm font-bold mb-2">Target URL</label>
-                <input type="url" id="url-input" placeholder="https://www.google.com" required
-                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+<body class="bg-slate-50 flex items-center justify-center min-h-screen px-4">
+    <div class="w-full max-w-2xl mx-auto">
+        <div class="bg-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-200">
+            <!-- Header Section -->
+            <div class="text-center mb-8">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                    <h1 class="text-3xl sm:text-4xl font-bold text-slate-800">Cookie Exporter</h1>
+                </div>
+                <p class="text-slate-500">Enter a URL to download its cookies as a .csv file.</p>
             </div>
             
-            <button type="submit" id="submitButton"
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-300 flex items-center justify-center">
-                <span id="buttonText">Download Cookies</span>
-                <div id="buttonSpinner" class="spinner hidden"></div>
-            </button>
-        </form>
+            <!-- Form Section -->
+            <form id="cookie-form">
+                <div class="mb-5">
+                    <label for="url-input" class="block text-slate-700 text-sm font-semibold mb-2">Target URL</label>
+                    <div class="flex items-center bg-slate-50 border-2 border-slate-200 rounded-xl focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-300 p-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                        <input type="url" id="url-input" placeholder="https://www.example.com" required
+                               class="w-full px-2 py-2 text-slate-700 bg-transparent border-none focus:outline-none focus:ring-0">
+                    </div>
+                </div>
+                
+                <button type="submit" id="submitButton"
+                        class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-[1.02] disabled:bg-indigo-400 disabled:cursor-not-allowed flex items-center justify-center">
+                    <span id="buttonText">Download Cookies</span>
+                    <div id="buttonSpinner" class="spinner hidden"></div>
+                </button>
+            </form>
 
-        <div id="messageDiv" class="mt-4 text-center text-sm text-gray-600 min-h-[40px] p-2 border border-transparent rounded-md"></div>
+            <!-- Message/Feedback Area -->
+            <div id="messageDiv" class="mt-6 text-center text-sm text-slate-600 min-h-[48px] flex items-center justify-center p-2 border border-transparent rounded-lg"></div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="text-center mt-6">
+            <p class="text-slate-500 text-sm">
+                Developed by <a href="https://github.com/melogabriel" target="_blank" rel="noopener noreferrer" class="font-medium text-indigo-600 hover:underline">Gabriel Melo</a>
+            </p>
+        </footer>
     </div>
 
     <script>
@@ -52,15 +82,15 @@
             const buttonSpinner = document.getElementById('buttonSpinner');
             const messageDiv = document.getElementById('messageDiv');
 
-            // --- UI Feedback ---
+            // --- UI Feedback: Start Loading ---
             submitButton.disabled = true;
             buttonText.classList.add('hidden');
             buttonSpinner.classList.remove('hidden');
-            messageDiv.className = 'mt-4 text-center text-sm p-2 border rounded-md border-blue-200 bg-blue-50 text-blue-700';
-            messageDiv.innerHTML = 'Connecting to the server... <br><small>This may take up to a minute if the server is waking up from sleep.</small>';
+            messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-blue-200 bg-blue-50 text-blue-800';
+            messageDiv.innerHTML = '<div class="flex flex-col items-center"><span>Connecting to the server...</span><small class="font-medium">This may take a minute if the server is waking up.</small></div>';
 
             try {
-                // --- Use your new, working Render URL ---
+                // --- API Endpoint ---
                 const apiUrl = 'https://cookie-scrapper.onrender.com/scrape'; 
                 
                 const response = await fetch(apiUrl, {
@@ -71,8 +101,9 @@
 
                 if (response.ok) {
                     const contentType = response.headers.get("content-type");
+                    // --- Handle Successful File Download ---
                     if (contentType && contentType.includes("text/csv")) {
-                        messageDiv.className = 'mt-4 text-center text-sm p-2 border rounded-md border-green-200 bg-green-50 text-green-700';
+                        messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-green-200 bg-green-50 text-green-800';
                         messageDiv.textContent = 'Success! Your download is starting.';
                         const blob = await response.blob();
                         const downloadUrl = window.URL.createObjectURL(blob);
@@ -82,22 +113,26 @@
                         document.body.appendChild(a);
                         a.click();
                         a.remove();
+                    // --- Handle Other Success Messages (e.g., no cookies found) ---
                     } else {
                         const result = await response.json();
-                        messageDiv.className = 'mt-4 text-center text-sm p-2 border rounded-md border-gray-200 bg-gray-50 text-gray-700';
+                        messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-slate-200 bg-slate-50 text-slate-700';
                         messageDiv.textContent = result.message || 'Received a success response but no file.';
                     }
+                // --- Handle Server Errors ---
                 } else {
                     const errorData = await response.json();
-                    messageDiv.className = 'mt-4 text-center text-sm p-2 border rounded-md border-red-200 bg-red-50 text-red-700';
-                    messageDiv.innerHTML = `<strong>Error:</strong> ${errorData.error}<br><small class="text-xs">${errorData.details || ''}</small>`;
+                    messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-red-200 bg-red-50 text-red-800';
+                    messageDiv.innerHTML = `<div class="flex flex-col"><strong>Error:</strong> ${errorData.error}</div>`;
                 }
 
+            // --- Handle Network Errors (Server is down) ---
             } catch (error) {
                 console.error('Fetch error:', error);
-                messageDiv.className = 'mt-4 text-center text-sm p-2 border rounded-md border-red-200 bg-red-50 text-red-700';
-                messageDiv.innerHTML = '<strong>Network Error:</strong> Could not connect to the server. It might be asleep or has crashed. Please try again in a minute.';
+                messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-red-200 bg-red-50 text-red-800';
+                messageDiv.innerHTML = '<strong>Network Error:</strong> Could not connect. Please try again in a minute.';
             } finally {
+                // --- UI Feedback: End Loading ---
                 submitButton.disabled = false;
                 buttonText.classList.remove('hidden');
                 buttonSpinner.classList.add('hidden');
