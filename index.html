@@ -3,49 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookie Exporter</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Free Cookie Exporter | Download Website Cookies as CSV</title>
+    <meta name="description" content="A free online tool to easily extract and download all browser cookies from any website as a .csv file. Perfect for developers, QA testers, and SEO analysts.">
+    <meta name="keywords" content="cookie exporter, download cookies, cookie scraper, export cookies csv, selenium, web scraping tool, developer tools">
+    <link rel="canonical" href="https://melogabriel.github.io/cookie-scrapper/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://melogabriel.github.io/cookie-scrapper/">
+    <meta property="og:title" content="Free Cookie Exporter | Download Website Cookies as CSV">
+    <meta property="og:description" content="A free online tool to easily extract and download all browser cookies from any website as a .csv file.">
+    <!-- Note: Create and upload an image (e.g., 1200x630px) to your repo for this tag -->
+    <meta property="og:image" content="https://melogabriel.github.io/cookie-scrapper/social-preview.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://melogabriel.github.io/cookie-scrapper/">
+    <meta property="twitter:title" content="Free Cookie Exporter | Download Website Cookies as CSV">
+    <meta property="twitter:description" content="A free online tool to easily extract and download all browser cookies from any website as a .csv file.">
+    <meta property="twitter:image" content="https://melogabriel.github.io/cookie-scrapper/social-preview.png">
+
+    <!-- Tailwind CSS & Google Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Import Google Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+        body { font-family: 'Inter', sans-serif; }
         .spinner {
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-top-color: #fff;
             border-radius: 50%;
-            width: 1rem; /* 16px */
-            height: 1rem; /* 16px */
+            width: 1rem;
+            height: 1rem;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
+
+    <!-- AEO: JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Cookie Exporter",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Requires a modern web browser.",
+      "description": "A free web-based tool that allows users to extract and download cookies from any URL as a CSV file.",
+      "url": "https://melogabriel.github.io/cookie-scrapper/",
+      "author": {
+        "@type": "Person",
+        "name": "Gabriel Melo",
+        "url": "https://github.com/melogabriel"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
 </head>
-<body class="bg-slate-50 flex items-center justify-center min-h-screen px-4">
+<body class="bg-slate-50 flex items-center justify-center min-h-screen py-12 px-4">
     <div class="w-full max-w-2xl mx-auto">
-        <div class="bg-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-200">
+        <main class="bg-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-200">
             <!-- Header Section -->
-            <div class="text-center mb-8">
+            <header class="text-center mb-8">
                 <div class="flex items-center justify-center gap-3 mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <svg role="img" aria-label="Code Icon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                     </svg>
                     <h1 class="text-3xl sm:text-4xl font-bold text-slate-800">Cookie Exporter</h1>
                 </div>
                 <p class="text-slate-500">Enter a URL to download its cookies as a .csv file.</p>
-            </div>
+            </header>
             
             <!-- Form Section -->
             <form id="cookie-form">
                 <div class="mb-5">
                     <label for="url-input" class="block text-slate-700 text-sm font-semibold mb-2">Target URL</label>
                     <div class="flex items-center bg-slate-50 border-2 border-slate-200 rounded-xl focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-300 p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <svg role="img" aria-label="Link Icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                         </svg>
                         <input type="text" id="url-input" placeholder="example.com" required
@@ -62,10 +103,16 @@
 
             <!-- Message/Feedback Area -->
             <div id="messageDiv" class="mt-6 text-center text-sm text-slate-600 min-h-[48px] flex items-center justify-center p-2 border border-transparent rounded-lg"></div>
-        </div>
+        </main>
         
+        <!-- On-Page Content Section -->
+        <section class="mt-10 text-slate-700 text-sm leading-relaxed">
+             <h2 class="text-lg font-semibold text-slate-800 text-center mb-4">How It Works</h2>
+             <p class="text-center">This tool uses a server-side automated browser to visit the URL you provide. It captures all accessible cookies (primarily first-party cookies due to modern browser privacy standards) and formats them into a downloadable CSV file. The process is ideal for developers needing to inspect session data or analysts reviewing a site's cookie implementation.</p>
+        </section>
+
         <!-- Footer -->
-        <footer class="text-center mt-6">
+        <footer class="text-center mt-8">
             <p class="text-slate-500 text-sm">
                 Developed by <a href="https://github.com/melogabriel" target="_blank" rel="noopener noreferrer" class="font-medium text-indigo-600 hover:underline">Gabriel Melo</a>
             </p>
@@ -77,21 +124,18 @@
             event.preventDefault();
             
             const urlInput = document.getElementById('url-input');
-            let url = urlInput.value.trim(); // Get the value and remove leading/trailing spaces
+            let url = urlInput.value.trim();
             
-            // --- ADDED: Automatically prepend https:// if the protocol is missing ---
             if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
                 url = 'https://' + url;
-                urlInput.value = url; // Optional: Update the input field to show the full URL
+                urlInput.value = url;
             }
-            // --- END OF ADDITION ---
 
             const submitButton = document.getElementById('submitButton');
             const buttonText = document.getElementById('buttonText');
             const buttonSpinner = document.getElementById('buttonSpinner');
             const messageDiv = document.getElementById('messageDiv');
 
-            // --- UI Feedback: Start Loading ---
             submitButton.disabled = true;
             buttonText.classList.add('hidden');
             buttonSpinner.classList.remove('hidden');
@@ -99,18 +143,16 @@
             messageDiv.innerHTML = '<div class="flex flex-col items-center"><span>Connecting to the server...</span><small class="font-medium">This may take a minute if the server is waking up.</small></div>';
 
             try {
-                // --- API Endpoint ---
                 const apiUrl = 'https://cookie-scrapper.onrender.com/scrape'; 
                 
                 const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url: url }) // Use the potentially modified URL
+                    body: JSON.stringify({ url: url })
                 });
 
                 if (response.ok) {
                     const contentType = response.headers.get("content-type");
-                    // --- Handle Successful File Download ---
                     if (contentType && contentType.includes("text/csv")) {
                         messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-green-200 bg-green-50 text-green-800';
                         messageDiv.textContent = 'Success! Your download is starting.';
@@ -122,26 +164,21 @@
                         document.body.appendChild(a);
                         a.click();
                         a.remove();
-                    // --- Handle Other Success Messages (e.g., no cookies found) ---
                     } else {
                         const result = await response.json();
                         messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-slate-200 bg-slate-50 text-slate-700';
                         messageDiv.textContent = result.message || 'Received a success response but no file.';
                     }
-                // --- Handle Server Errors ---
                 } else {
                     const errorData = await response.json();
                     messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-red-200 bg-red-50 text-red-800';
                     messageDiv.innerHTML = `<div class="flex flex-col"><strong>Error:</strong> ${errorData.error}</div>`;
                 }
-
-            // --- Handle Network Errors (Server is down) ---
             } catch (error) {
                 console.error('Fetch error:', error);
                 messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-red-200 bg-red-50 text-red-800';
                 messageDiv.innerHTML = '<strong>Network Error:</strong> Could not connect. Please try again in a minute.';
             } finally {
-                // --- UI Feedback: End Loading ---
                 submitButton.disabled = false;
                 buttonText.classList.remove('hidden');
                 buttonSpinner.classList.add('hidden');
