@@ -9,15 +9,6 @@ A full-stack web application that allows users to enter a URL and download the w
 
 **Note:** The backend is hosted on Render's free tier and will "go to sleep" after 15 minutes of inactivity. The first request may take up to a minute to "wake up" the service.
 
-## Table of Contents
-
-  * [Features](https://www.google.com/search?q=%23features)
-  * [Tech Stack](https://www.google.com/search?q=%23tech-stack)
-  * [Architecture](https://www.google.com/search?q=%23architecture)
-  * [Deployment Instructions](https://www.google.com/search?q=%23deployment-instructions)
-  * [Troubleshooting](https://www.google.com/search?q=%23troubleshooting)
-  * [License](https://www.google.com/search?q=%23license)
-
 ## Features
 
   * **User-Friendly Web Interface:** A clean, simple frontend for entering a target URL.
