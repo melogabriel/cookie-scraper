@@ -4,8 +4,8 @@ A full-stack web application that allows users to enter a URL and download the w
 
 ## Live Demo
 
-  * **Frontend Interface:** [https://melogabriel.github.io/cookie-scrapper/](https://www.google.com/search?q=https://melogabriel.github.io/cookie-scraper/)
-  * **Backend Health Check:** [https://cookie-scrapper.onrender.com/](https://cookie-scrapper.onrender.com/)
+  * **Frontend Interface:** https://melogabriel.github.io/cookie-scraper/
+  * **Backend Health Check:** https://cookie-scrapper.onrender.com/
 
 **Note:** The backend is hosted on Render's free tier and will "go to sleep" after 15 minutes of inactivity. The first request may take up to a minute to "wake up" the service.
 
