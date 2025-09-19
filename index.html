@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-M8VGTNS7');</script>
-<!-- End Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M8VGTNS7');</script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -22,7 +23,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta property="og:url" content="https://melogabriel.github.io/cookie-scrapper/">
     <meta property="og:title" content="Free Cookie Exporter | Download Website Cookies as CSV">
     <meta property="og:description" content="A free online tool to easily extract and download all browser cookies from any website as a .csv file.">
-    <!-- Note: Create and upload an image (e.g., 1200x630px) to your repo for this tag -->
     <meta property="og:image" content="https://melogabriel.github.io/cookie-scrapper/social-preview.png">
 
     <!-- Twitter -->
@@ -49,6 +49,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        #shareModal.hidden { display: none; }
     </style>
 
     <!-- AEO: JSON-LD Structured Data -->
@@ -76,13 +77,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </head>
 <body class="bg-slate-50 flex items-center justify-center min-h-screen py-12 px-4">
     <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M8VGTNS7"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M8VGTNS7"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <div class="w-full max-w-2xl mx-auto">
         <main class="bg-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-200">
             <!-- Header Section -->
-            <header class="text-center mb-8">
+            <header class="text-center mb-8 relative">
                 <div class="flex items-center justify-center gap-3 mb-4">
                     <svg role="img" aria-label="Code Icon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -130,70 +132,154 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </footer>
     </div>
 
-    <script>
-        document.getElementById('cookie-form').addEventListener('submit', async function(event) {
-            event.preventDefault();
-            
-            const urlInput = document.getElementById('url-input');
-            let url = urlInput.value.trim();
-            
-            if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
-                url = 'https://' + url;
-                urlInput.value = url;
-            }
+    <!-- Share Modal -->
+    <div id="shareModal" class="fixed inset-0 bg-slate-900 bg-opacity-50 flex items-center justify-center p-4 transition-opacity duration-300 hidden">
+        <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-xl border border-slate-200 transform transition-all duration-300 scale-95" id="shareModalContent">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-slate-800">Share this Tool</h3>
+                <button id="closeShareModalBtn" class="p-2 text-slate-400 hover:text-slate-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <p class="text-slate-500 mb-6">Help others discover this free cookie exporter.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Social Links -->
+                <a href="#" id="shareTwitter" target="_blank" class="flex items-center justify-center gap-3 p-3 bg-sky-400 text-white font-semibold rounded-lg hover:bg-sky-500 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/></svg>
+                    <span>Twitter</span>
+                </a>
+                <a href="#" id="shareFacebook" target="_blank" class="flex items-center justify-center gap-3 p-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v2.278h-1.31c-.979 0-1.168.465-1.168 1.14v1.499h2.531l-.42 2.375h-2.11V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" id="shareLinkedIn" target="_blank" class="flex items-center justify-center gap-3 p-3 bg-blue-800 text-white font-semibold rounded-lg hover:bg-blue-900 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
+                    <span>LinkedIn</span>
+                </a>
+                 <button id="copyLinkBtn" class="flex items-center justify-center gap-3 p-3 bg-slate-600 text-white font-semibold rounded-lg hover:bg-slate-700 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/><path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/></svg>
+                    <span id="copyLinkText">Copy Link</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Elements ---
+            const cookieForm = document.getElementById('cookie-form');
+            const urlInput = document.getElementById('url-input');
             const submitButton = document.getElementById('submitButton');
             const buttonText = document.getElementById('buttonText');
             const buttonSpinner = document.getElementById('buttonSpinner');
             const messageDiv = document.getElementById('messageDiv');
+            const shareModal = document.getElementById('shareModal');
+            const closeShareModalBtn = document.getElementById('closeShareModalBtn');
+            const shareModalContent = document.getElementById('shareModalContent');
+            const copyLinkBtn = document.getElementById('copyLinkBtn');
+            const copyLinkText = document.getElementById('copyLinkText');
 
-            submitButton.disabled = true;
-            buttonText.classList.add('hidden');
-            buttonSpinner.classList.remove('hidden');
-            messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-blue-200 bg-blue-50 text-blue-800';
-            messageDiv.innerHTML = '<div class="flex flex-col items-center"><span>Connecting to the server...</span><small class="font-medium">This may take a minute if the server is waking up.</small></div>';
+            // --- Share Configuration ---
+            const shareUrl = 'https://melogabriel.github.io/cookie-scrapper/';
+            const shareText = encodeURIComponent('Check out this free tool to download website cookies as a CSV!');
+            const shareTitle = encodeURIComponent('Web Cookie Exporter');
 
-            try {
-                const apiUrl = 'https://cookie-scrapper.onrender.com/scrape'; 
-                
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url: url })
-                });
+            document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`;
+            document.getElementById('shareFacebook').href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+            document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareTitle}&summary=${shareText}`;
 
-                if (response.ok) {
-                    const contentType = response.headers.get("content-type");
-                    if (contentType && contentType.includes("text/csv")) {
-                        messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-green-200 bg-green-50 text-green-800';
-                        messageDiv.textContent = 'Success! Your download is starting.';
-                        const blob = await response.blob();
-                        const downloadUrl = window.URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = downloadUrl;
-                        a.download = 'cookies.csv';
-                        document.body.appendChild(a);
-                        a.click();
-                        a.remove();
-                    } else {
-                        const result = await response.json();
-                        messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-slate-200 bg-slate-50 text-slate-700';
-                        messageDiv.textContent = result.message || 'Received a success response but no file.';
-                    }
-                } else {
-                    const errorData = await response.json();
-                    messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-red-200 bg-red-50 text-red-800';
-                    messageDiv.innerHTML = `<div class="flex flex-col"><strong>Error:</strong> ${errorData.error}</div>`;
-                }
-            } catch (error) {
-                console.error('Fetch error:', error);
-                messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-red-200 bg-red-50 text-red-800';
-                messageDiv.innerHTML = '<strong>Network Error:</strong> Could not connect. Please try again in a minute.';
-            } finally {
-                submitButton.disabled = false;
-                buttonText.classList.remove('hidden');
-                buttonSpinner.classList.add('hidden');
+            // --- Modal Functions ---
+            function openModal() {
+                shareModal.classList.remove('hidden');
+                setTimeout(() => {
+                    shareModal.classList.add('opacity-100');
+                    shareModalContent.classList.add('scale-100');
+                }, 10);
             }
+
+            function closeModal() {
+                shareModal.classList.remove('opacity-100');
+                shareModalContent.classList.remove('scale-100');
+                setTimeout(() => {
+                    shareModal.classList.add('hidden');
+                }, 300);
+            }
+
+            // --- Event Listeners ---
+            closeShareModalBtn.addEventListener('click', closeModal);
+            shareModal.addEventListener('click', (event) => {
+                if (event.target === shareModal) { closeModal(); }
+            });
+
+            copyLinkBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    copyLinkText.textContent = 'Copied!';
+                    setTimeout(() => { copyLinkText.textContent = 'Copy Link'; }, 2000);
+                }).catch(err => console.error('Failed to copy text: ', err));
+            });
+
+            // --- Main Form Logic ---
+            cookieForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                let url = urlInput.value.trim();
+                
+                if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+                    url = 'https://' + url;
+                    urlInput.value = url;
+                }
+
+                submitButton.disabled = true;
+                buttonText.classList.add('hidden');
+                buttonSpinner.classList.remove('hidden');
+                messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-blue-200 bg-blue-50 text-blue-800';
+                messageDiv.innerHTML = '<div class="flex flex-col items-center"><span>Connecting to the server...</span><small class="font-medium">This may take a minute if the server is waking up.</small></div>';
+
+                try {
+                    const apiUrl = 'https://cookie-scrapper.onrender.com/scrape';
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ url: url })
+                    });
+
+                    if (response.ok) {
+                        const contentType = response.headers.get("content-type");
+                        if (contentType && contentType.includes("text/csv")) {
+                            messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-green-200 bg-green-50 text-green-800';
+                            messageDiv.textContent = 'Success! Your download is starting.';
+                            const blob = await response.blob();
+                            const downloadUrl = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = downloadUrl;
+                            a.download = 'cookies.csv';
+                            document.body.appendChild(a);
+                            a.click();
+                            a.remove();
+                            
+                            setTimeout(openModal, 1000);
+
+                        } else {
+                            const result = await response.json();
+                            messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-slate-200 bg-slate-50 text-slate-700';
+                            messageDiv.textContent = result.message || 'Received a success response but no file.';
+                        }
+                    } else {
+                        const errorData = await response.json();
+                        messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-red-200 bg-red-50 text-red-800';
+                        messageDiv.innerHTML = `<div class="flex flex-col"><strong>Error:</strong> ${errorData.error}</div>`;
+                    }
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                    messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-red-200 bg-red-50 text-red-800';
+                    messageDiv.innerHTML = '<strong>Network Error:</strong> Could not connect. Please try again in a minute.';
+                } finally {
+                    submitButton.disabled = false;
+                    buttonText.classList.remove('hidden');
+                    buttonSpinner.classList.add('hidden');
+                }
+            });
         });
     </script>
 </body>
