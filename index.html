@@ -306,7 +306,13 @@
                             a.remove();
                             
                             setTimeout(openModal, 1000);
-
+                            
+                        // Push a custom event to the dataLayer for GTM to capture
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                        event: 'file_download'
+                        });
+                            
                         } else {
                             const result = await response.json();
                             messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-slate-200 bg-slate-50 text-slate-700';
@@ -328,13 +334,6 @@
                 }
             });
         });
-
-        // Push a custom event to the dataLayer for GTM to capture
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: 'file_download'
-        });
-        
     </script>
 </body>
 </html>
