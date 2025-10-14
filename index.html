@@ -328,6 +328,13 @@
                 }
             });
         });
+
+        // Push a custom event to the dataLayer for GTM to capture
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'file_download'
+        });
+        
     </script>
 </body>
 </html>
