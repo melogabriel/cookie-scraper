@@ -1,4 +1,4 @@
-# Web Cookie Exporter
+# Web Cookie Scraper
 
 A full-stack web application that allows users to enter a URL and download the website's cookies as a `.csv` file. The frontend is hosted on GitHub Pages, and the backend is a containerized Flask and Selenium service deployed on Render.
 
