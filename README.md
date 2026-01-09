@@ -6,7 +6,7 @@ By leveraging **Selenium** and **Headless Chrome** in a containerized environmen
 
 ## **Live Demo**
 
-* **Web Interface:** [https://melogabriel.github.io/cookie-scrapper/](https://melogabriel.github.io/cookie-scrapper/)  
+* **Web Interface:** [https://melogabriel.github.io/cookie-scrapper/](https://melogabriel.github.io/cookie-scraper/)  
 * **System Health Check:** [https://cookie-scrapper.onrender.com/](https://cookie-scrapper.onrender.com/)
 
 **Pro Tip:** Our backend uses Render's free tier. If the tool feels slow on the first try, the server is likely "waking up" from sleep mode. Please allow up to 60 seconds for the initial request.
