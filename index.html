@@ -17,7 +17,7 @@
     <meta name="description" content="A free online tool to easily extract and download all browser cookies from any website as a .csv file. Perfect for developers, QA testers, and SEO analysts.">
     <meta name="keywords" content="cookie exporter, download cookies, cookie scraper, export cookies csv, selenium, web scraping tool, developer tools">
     
-    <!-- NEW: Favicon -->
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' stroke='%234F46E5' d='M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' /></svg>">
     
     <link rel="canonical" href="https://melogabriel.github.io/cookie-scrapper/">
@@ -39,21 +39,37 @@
     <!-- Tailwind CSS & Google Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
         .spinner {
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-top-color: #fff;
             border-radius: 50%;
-            width: 1rem;
-            height: 1rem;
+            width: 1.25rem;
+            height: 1.25rem;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         #shareModal.hidden { display: none; }
+        .btn-github {
+            background-color: #24292e;
+            transition: all 0.2s ease;
+        }
+        .btn-github:hover {
+            background-color: #2c3238;
+            transform: translateY(-1px);
+        }
     </style>
 
     <!-- AEO: JSON-LD Structured Data -->
@@ -72,141 +88,168 @@
         "name": "Gabriel Melo",
         "url": "https://github.com/melogabriel"
       },
-      "offers": {
-        "@type": "Offer",
-        "price": "0"
-      }
+      "offers": { "@type": "Offer", "price": "0" }
     }
     </script>
 </head>
-<body class="bg-slate-50 flex items-center justify-center min-h-screen py-12 px-4">
+<body class="min-h-screen flex items-center justify-center py-12 px-4">
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M8VGTNS7"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <div class="w-full max-w-2xl mx-auto">
-        <main class="bg-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-200">
+    <div class="w-full max-w-2xl mx-auto space-y-6">
+        <main class="glass-card p-8 sm:p-10 rounded-3xl shadow-2xl">
             <!-- Header Section -->
-            <header class="text-center mb-8 relative">
-                <div class="flex items-center justify-center gap-3 mb-4">
-                    <svg role="img" aria-label="Code Icon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                    </svg>
-                    <h1 class="text-3xl sm:text-4xl font-bold text-slate-800">Cookie Exporter</h1>
+            <header class="text-center mb-10 relative">
+                <div class="flex justify-between items-start mb-6">
+                    <!-- Dynamic Live Status Badge -->
+                    <div id="statusBadge" class="flex items-center gap-2 px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full uppercase tracking-wider transition-colors duration-500">
+                        <span class="relative flex h-2 w-2">
+                          <span id="statusPing" class="absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-75"></span>
+                          <span id="statusDot" class="relative inline-flex rounded-full h-2 w-2 bg-slate-500"></span>
+                        </span>
+                        <span id="statusText">Checking...</span>
+                    </div>
+                    
+                    <a href="https://github.com/melogabriel/cookie-scraper" target="_blank" class="btn-github flex items-center gap-2 text-white px-4 py-1.5 rounded-lg text-sm font-semibold shadow-sm">
+                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.08.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                        </svg>
+                        Star on GitHub
+                    </a>
                 </div>
-                <p class="text-slate-500">Enter a URL to download its cookies as a .csv file.</p>
+
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <div class="p-3 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-200">
+                        <svg role="img" aria-label="Code Icon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-800 tracking-tight">Cookie Exporter</h1>
+                </div>
+                <p class="text-slate-500 text-lg">Extract website cookies to CSV instantly.</p>
             </header>
             
             <!-- Form Section -->
-            <form id="cookie-form">
-                <div class="mb-5">
-                    <label for="url-input" class="block text-slate-700 text-sm font-semibold mb-2">Target URL</label>
-                    <div class="flex items-center bg-slate-50 border-2 border-slate-200 rounded-xl focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-300 p-1">
-                        <svg role="img" aria-label="Link Icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                        </svg>
+            <form id="cookie-form" class="space-y-6">
+                <div>
+                    <label for="url-input" class="block text-slate-700 text-sm font-bold mb-2 ml-1">Target Website URL</label>
+                    <div class="group flex items-center bg-slate-50 border-2 border-slate-200 rounded-2xl focus-within:ring-4 focus-within:ring-indigo-100 focus-within:border-indigo-500 transition-all duration-300 p-2">
+                        <div class="p-2 bg-white rounded-xl shadow-sm mr-2 group-focus-within:text-indigo-600 text-slate-400 transition-colors">
+                            <svg role="img" aria-label="Link Icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                            </svg>
+                        </div>
                         <input type="text" id="url-input" placeholder="example.com" required
-                               class="w-full px-2 py-2 text-slate-700 bg-transparent border-none focus:outline-none focus:ring-0">
+                               class="w-full px-2 py-3 text-slate-700 bg-transparent border-none focus:outline-none focus:ring-0 text-lg">
                     </div>
                 </div>
                 
                 <button type="submit" id="submitButton"
-                        class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-[1.02] disabled:bg-indigo-400 disabled:cursor-not-allowed flex items-center justify-center">
+                        class="w-full bg-indigo-600 text-white font-bold py-4 px-6 rounded-2xl hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all transform active:scale-[0.98] shadow-xl shadow-indigo-100 flex items-center justify-center gap-3">
                     <span id="buttonText">Download Cookies</span>
                     <div id="buttonSpinner" class="spinner hidden"></div>
                 </button>
             </form>
 
             <!-- Message/Feedback Area -->
-            <div id="messageDiv" class="mt-6 text-center text-sm text-slate-600 min-h-[48px] flex items-center justify-center p-2 border border-transparent rounded-lg"></div>
+            <div id="messageDiv" class="mt-8 text-center text-sm transition-all duration-300 min-h-[56px] flex items-center justify-center p-3 rounded-2xl border border-transparent"></div>
         </main>
         
-        <!-- On-Page Content Section -->
-        <section class="mt-10 text-slate-700 text-sm leading-relaxed">
-             <h2 class="text-lg font-semibold text-slate-800 text-center mb-4">How It Works</h2>
-             <p class="text-center">This tool uses a server-side automated browser to visit the URL you provide. It captures all accessible cookies (primarily first-party cookies due to modern browser privacy standards) and formats them into a downloadable CSV file. The process is ideal for developers needing to inspect session data or analysts reviewing a site's cookie implementation.</p>
+        <!-- How It Works Section -->
+        <section class="bg-white/50 p-8 rounded-3xl border border-slate-200 shadow-sm">
+             <h2 class="text-xl font-bold text-slate-800 text-center mb-4">How It Works</h2>
+             <p class="text-slate-600 text-center leading-relaxed">This professional tool uses an automated headless browser to visit your target URL, captures first-party cookies, and compiles them into a structured CSV file. Safe, fast, and no extensions required.</p>
         </section>
 
         <!-- Footer -->
-        <footer class="text-center mt-8 space-y-2">
+        <footer class="text-center pt-4 space-y-4">
             <p class="text-slate-500 text-sm">
-                Developed by <a href="https://github.com/melogabriel" target="_blank" rel="noopener noreferrer" class="font-medium text-indigo-600 hover:underline">Gabriel Melo</a>
+                Developed by <a href="https://github.com/melogabriel" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-600 hover:text-indigo-800 underline underline-offset-4">Gabriel Melo</a>
             </p>
-            <div class="text-slate-500 text-sm flex items-center justify-center gap-x-4">
-                 <a href="https://github.com/melogabriel/cookie-scraper/issues/new" target="_blank" rel="noopener noreferrer" class="font-medium text-indigo-600 hover:underline">Report an Issue</a>
-                 <span class="text-slate-300">|</span>
-                 <a href="https://github.com/melogabriel/cookie-scraper/compare" target="_blank" rel="noopener noreferrer" class="font-medium text-indigo-600 hover:underline">Contribute</a>
+            <div class="flex items-center justify-center gap-6">
+                 <a href="https://github.com/melogabriel/cookie-scraper/issues/new" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-red-600 text-sm font-medium transition-colors">Report Issue</a>
+                 <div class="h-4 w-px bg-slate-300"></div>
+                 <a href="https://github.com/melogabriel/cookie-scraper/compare" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-indigo-600 text-sm font-medium transition-colors">Contribute</a>
             </div>
         </footer>
     </div>
 
     <!-- Share Modal -->
-    <div id="shareModal" class="fixed inset-0 bg-slate-900 bg-opacity-50 flex items-center justify-center p-4 transition-opacity duration-300 hidden opacity-0">
-        <div class="bg-white w-full max-w-lg p-6 rounded-2xl shadow-xl border border-slate-200 transform transition-all duration-300 scale-95" id="shareModalContent">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-slate-800">Share this Tool</h3>
-                <button id="closeShareModalBtn" class="p-2 text-slate-400 hover:text-slate-600 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <div id="shareModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300 hidden opacity-0">
+        <div class="bg-white w-full max-w-lg p-8 rounded-[2.5rem] shadow-2xl border border-slate-100 transform transition-all duration-300 scale-95" id="shareModalContent">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-black text-slate-800 tracking-tight">Share the Tool</h3>
+                <button id="closeShareModalBtn" class="p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
-            <p class="text-slate-500 mb-6">Help others discover this free cookie exporter.</p>
+            <p class="text-slate-500 text-lg mb-8">Help your fellow developers by sharing this exporter!</p>
             
-            <!-- Social Links Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
-                <!-- Twitter -->
-                <a href="#" id="shareTwitter" target="_blank" class="flex items-center justify-center gap-3 p-3 bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.6.75zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633z"/></svg>
-                    <span>Twitter</span>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+                <!-- Social Buttons -->
+                <a href="#" id="shareTwitter" target="_blank" class="flex flex-col items-center justify-center gap-2 p-4 bg-gray-900 text-white rounded-2xl hover:opacity-90 transition-all group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.6.75zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633z"/></svg>
+                    <span class="text-xs font-bold uppercase tracking-widest">Twitter</span>
                 </a>
-                <!-- Facebook -->
-                <a href="#" id="shareFacebook" target="_blank" class="flex items-center justify-center gap-3 p-3 bg-[#1877F2] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v2.278h-1.31c-.979 0-1.168.465-1.168 1.14v1.499h2.531l-.42 2.375h-2.11V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
-                    <span>Facebook</span>
+                <a href="#" id="shareWhatsApp" target="_blank" class="flex flex-col items-center justify-center gap-2 p-4 bg-[#25D366] text-white rounded-2xl hover:opacity-90 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+                    <span class="text-xs font-bold uppercase tracking-widest">WhatsApp</span>
                 </a>
-                <!-- LinkedIn -->
-                <a href="#" id="shareLinkedIn" target="_blank" class="flex items-center justify-center gap-3 p-3 bg-[#0A66C2] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
-                    <span>LinkedIn</span>
+                <a href="#" id="shareLinkedIn" target="_blank" class="flex flex-col items-center justify-center gap-2 p-4 bg-[#0A66C2] text-white rounded-2xl hover:opacity-90 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
+                    <span class="text-xs font-bold uppercase tracking-widest">LinkedIn</span>
                 </a>
-                <!-- WhatsApp -->
-                <a href="#" id="shareWhatsApp" target="_blank" class="flex items-center justify-center gap-3 p-3 bg-[#25D366] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
-                    <span>WhatsApp</span>
+                <a href="#" id="shareTelegram" target="_blank" class="flex flex-col items-center justify-center gap-2 p-4 bg-[#26A5E4] text-white rounded-2xl hover:opacity-90 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.396.008-.748.172-1.023.322z"/></svg>
+                    <span class="text-xs font-bold uppercase tracking-widest">Telegram</span>
                 </a>
-                <!-- Telegram -->
-                <a href="#" id="shareTelegram" target="_blank" class="flex items-center justify-center gap-3 p-3 bg-[#26A5E4] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.396.008-.748.172-1.023.322z"/></svg>
-                    <span>Telegram</span>
-                </a>
-                <!-- Email -->
-                 <a href="#" id="shareMail" class="flex items-center justify-center gap-3 p-3 bg-slate-500 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.558z"/></svg>
-                    <span>Email</span>
+                <button type="button" id="emailShareBtn" class="flex flex-col items-center justify-center gap-2 p-4 bg-slate-600 text-white rounded-2xl hover:opacity-90 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.558z"/></svg>
+                    <span class="text-xs font-bold uppercase tracking-widest">Email</span>
+                </button>
+                <a href="#" id="shareFacebook" target="_blank" class="flex flex-col items-center justify-center gap-2 p-4 bg-[#1877F2] text-white rounded-2xl hover:opacity-90 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v2.278h-1.31c-.979 0-1.168.465-1.168 1.14v1.499h2.531l-.42 2.375h-2.11V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
+                    <span class="text-xs font-bold uppercase tracking-widest">Facebook</span>
                 </a>
             </div>
 
-            <!-- Copy Link Section -->
-            <div class="flex items-center gap-2">
-                <input id="shareUrlInput" type="text" readonly value="https://melogabriel.github.io/cookie-scrapper/" class="w-full px-3 py-2 text-sm text-slate-500 bg-slate-100 border border-slate-200 rounded-lg focus:outline-none">
-                <button id="copyLinkBtn" class="flex-shrink-0 flex items-center justify-center gap-2 p-3 bg-slate-600 text-white font-semibold rounded-lg hover:bg-slate-700 transition-colors">
-                    <span id="copyIcon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/><path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/></svg>
-                    </span>
-                    <span id="checkIcon" class="hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>
-                    </span>
-                    <span id="copyLinkText">Copy</span>
-                </button>
+            <div class="space-y-4">
+                <div class="flex items-center gap-3 p-1 pl-4 bg-slate-50 border-2 border-slate-100 rounded-2xl">
+                    <input id="shareUrlInput" type="text" readonly value="https://melogabriel.github.io/cookie-scrapper/" class="w-full py-3 bg-transparent text-slate-500 font-medium focus:outline-none">
+                    <button id="copyLinkBtn" class="flex-shrink-0 flex items-center justify-center gap-2 px-6 py-3 bg-slate-800 text-white font-bold rounded-xl hover:bg-black transition-all">
+                        <span id="copyIcon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/><path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/></svg>
+                        </span>
+                        <span id="checkIcon" class="hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>
+                        </span>
+                        <span id="copyLinkText">Copy</span>
+                    </button>
+                </div>
+                
+                <div id="emailContent" class="hidden p-5 bg-indigo-50 border-2 border-indigo-100 rounded-3xl animate-in fade-in slide-in-from-top-4 duration-300">
+                    <p class="text-sm text-indigo-900 font-bold mb-3 uppercase tracking-tighter">Email Draft:</p>
+                    <div class="space-y-2">
+                        <div>
+                            <label class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Subject</label>
+                            <p id="emailSubject" class="text-sm p-3 bg-white border border-indigo-100 rounded-xl text-slate-700 font-medium"></p>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Message</label>
+                            <p id="emailBody" class="text-sm p-3 bg-white border border-indigo-100 rounded-xl text-slate-700 font-medium"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Elements ---
             const cookieForm = document.getElementById('cookie-form');
             const urlInput = document.getElementById('url-input');
             const submitButton = document.getElementById('submitButton');
@@ -220,23 +263,61 @@
             const copyLinkText = document.getElementById('copyLinkText');
             const copyIcon = document.getElementById('copyIcon');
             const checkIcon = document.getElementById('checkIcon');
+            const emailShareBtn = document.getElementById('emailShareBtn');
+            const emailContent = document.getElementById('emailContent');
+            const emailSubject = document.getElementById('emailSubject');
+            const emailBody = document.getElementById('emailBody');
 
-            // --- Share Configuration ---
+            const statusBadge = document.getElementById('statusBadge');
+            const statusText = document.getElementById('statusText');
+            const statusDot = document.getElementById('statusDot');
+            const statusPing = document.getElementById('statusPing');
+
             const shareUrl = 'https://melogabriel.github.io/cookie-scrapper/';
-            const shareText = encodeURIComponent('Check out this free tool to download website cookies as a CSV!');
-            const shareTitle = encodeURIComponent('Web Cookie Exporter');
+            const shareText = 'Check out this free tool to download website cookies as a CSV!';
+            const shareTitle = 'Web Cookie Exporter';
 
-            document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`;
-            document.getElementById('shareFacebook').href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
-            document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareTitle}&summary=${shareText}`;
-            document.getElementById('shareWhatsApp').href = `https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`;
-            document.getElementById('shareTelegram').href = `https://t.me/share/url?url=${shareUrl}&text=${shareText}`;
-            document.getElementById('shareMail').href = `mailto:?subject=${shareTitle}&body=${shareText}%20${shareUrl}`;
+            const backendUrl = 'https://cookie-scrapper.onrender.com/';
 
-            // --- Modal Functions ---
+            // --- Function to check backend health ---
+            async function checkHealth() {
+                try {
+                    const response = await fetch(backendUrl);
+                    if (response.ok) {
+                        statusBadge.className = 'flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full uppercase tracking-wider transition-colors duration-500';
+                        statusText.textContent = 'Service Live';
+                        statusDot.className = 'relative inline-flex rounded-full h-2 w-2 bg-green-500';
+                        statusPing.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75';
+                    } else {
+                        throw new Error();
+                    }
+                } catch (e) {
+                    statusBadge.className = 'flex items-center gap-2 px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full uppercase tracking-wider transition-colors duration-500';
+                    statusText.textContent = 'Service Sleeping';
+                    statusDot.className = 'relative inline-flex rounded-full h-2 w-2 bg-amber-500';
+                    statusPing.className = 'absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75';
+                }
+            }
+
+            // Initial health check
+            checkHealth();
+
+            document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+            document.getElementById('shareFacebook').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+            document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareTitle)}&summary=${encodeURIComponent(shareText)}`;
+            document.getElementById('shareWhatsApp').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+            document.getElementById('shareTelegram').href = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+
+            emailSubject.textContent = shareTitle;
+            emailBody.textContent = shareText + ' ' + shareUrl;
+
             function openModal() {
-                shareModal.classList.remove('hidden', 'opacity-0');
-                shareModalContent.classList.remove('scale-95');
+                emailContent.classList.add('hidden');
+                shareModal.classList.remove('hidden');
+                setTimeout(() => {
+                    shareModal.classList.remove('opacity-0');
+                    shareModalContent.classList.remove('scale-95');
+                }, 10);
             }
 
             function closeModal() {
@@ -247,11 +328,9 @@
                 }, 300);
             }
 
-            // --- Event Listeners ---
             closeShareModalBtn.addEventListener('click', closeModal);
-            shareModal.addEventListener('click', (event) => {
-                if (event.target === shareModal) { closeModal(); }
-            });
+            shareModal.addEventListener('click', (e) => { if (e.target === shareModal) closeModal(); });
+            emailShareBtn.addEventListener('click', () => emailContent.classList.toggle('hidden'));
 
             copyLinkBtn.addEventListener('click', () => {
                 const urlToCopy = document.getElementById('shareUrlInput').value;
@@ -264,14 +343,12 @@
                         copyIcon.classList.remove('hidden');
                         checkIcon.classList.add('hidden');
                     }, 2000);
-                }).catch(err => console.error('Failed to copy text: ', err));
+                }).catch(err => console.error('Failed to copy: ', err));
             });
 
-            // --- Main Form Logic ---
             cookieForm.addEventListener('submit', async function(event) {
                 event.preventDefault();
                 let url = urlInput.value.trim();
-                
                 if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
                     url = 'https://' + url;
                     urlInput.value = url;
@@ -280,11 +357,11 @@
                 submitButton.disabled = true;
                 buttonText.classList.add('hidden');
                 buttonSpinner.classList.remove('hidden');
-                messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-blue-200 bg-blue-50 text-blue-800';
-                messageDiv.innerHTML = '<div class="flex flex-col items-center"><span>Connecting to the server...</span><small class="font-medium">This may take a minute if the server is waking up.</small></div>';
+                messageDiv.className = 'mt-8 text-center text-sm flex items-center justify-center p-4 rounded-2xl border-2 border-indigo-100 bg-indigo-50 text-indigo-800 animate-pulse';
+                messageDiv.innerHTML = '<div class="flex flex-col items-center"><span>Connecting to the cloud browser...</span><small class="font-bold opacity-75">Cold start might take ~60s</small></div>';
 
                 try {
-                    const apiUrl = 'https://cookie-scrapper.onrender.com/scrape';
+                    const apiUrl = backendUrl + 'scrape';
                     const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -294,8 +371,8 @@
                     if (response.ok) {
                         const contentType = response.headers.get("content-type");
                         if (contentType && contentType.includes("text/csv")) {
-                            messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-green-200 bg-green-50 text-green-800';
-                            messageDiv.textContent = 'Success! Your download is starting.';
+                            messageDiv.className = 'mt-8 text-center text-sm flex items-center justify-center p-4 rounded-2xl border-2 border-green-100 bg-green-50 text-green-800 font-bold';
+                            messageDiv.textContent = 'Extraction complete! Download started.';
                             const blob = await response.blob();
                             const downloadUrl = window.URL.createObjectURL(blob);
                             const a = document.createElement('a');
@@ -305,28 +382,23 @@
                             a.click();
                             a.remove();
                             
-                            setTimeout(openModal, 1000);
-                            
-                        // Push a custom event to the dataLayer for GTM to capture
-                        window.dataLayer = window.dataLayer || [];
-                        window.dataLayer.push({
-                        event: 'file_download'
-                        });
-                            
+                            setTimeout(openModal, 1500);
+
+                            window.dataLayer = window.dataLayer || [];
+                            window.dataLayer.push({ event: 'file_download' });
                         } else {
                             const result = await response.json();
-                            messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-slate-200 bg-slate-50 text-slate-700';
-                            messageDiv.textContent = result.message || 'Received a success response but no file.';
+                            messageDiv.className = 'mt-8 text-center text-sm flex items-center justify-center p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700';
+                            messageDiv.textContent = result.message || 'Scrape successful but no file returned.';
                         }
                     } else {
                         const errorData = await response.json();
-                        messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-red-200 bg-red-50 text-red-800';
-                        messageDiv.innerHTML = `<div class="flex flex-col"><strong>Error:</strong> ${errorData.error}</div>`;
+                        messageDiv.className = 'mt-8 text-center text-sm flex items-center justify-center p-4 rounded-2xl border-2 border-red-100 bg-red-50 text-red-800';
+                        messageDiv.innerHTML = `<strong>Scrape Error:</strong> ${errorData.error}`;
                     }
                 } catch (error) {
-                    console.error('Fetch error:', error);
-                    messageDiv.className = 'mt-6 text-center text-sm flex items-center justify-center p-2 border rounded-lg border-red-200 bg-red-50 text-red-800';
-                    messageDiv.innerHTML = '<strong>Network Error:</strong> Could not connect. Please try again in a minute.';
+                    messageDiv.className = 'mt-8 text-center text-sm flex items-center justify-center p-4 rounded-2xl border-2 border-red-100 bg-red-50 text-red-800';
+                    messageDiv.innerHTML = '<strong>Network Timeout:</strong> Server is likely still waking up. Please refresh and try again in 30 seconds.';
                 } finally {
                     submitButton.disabled = false;
                     buttonText.classList.remove('hidden');
@@ -337,4 +409,3 @@
     </script>
 </body>
 </html>
-
